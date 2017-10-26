@@ -1367,9 +1367,7 @@ describe('BrowserWindow module', () => {
         })
         w.loadURL(`file://${path.join(fixtures, 'api', 'native-window-open-iframe.html')}`)
       })
-      // TODO(alexeykuzmin): Disabled during Chromium 61 upgrade.
-      // Fix it and enable.
-      xit('loads native addons correctly after reload', (done) => {
+      it('loads native addons correctly after reload', (done) => {
         if (!nativeModulesEnabled) return done()
 
         ipcMain.once('answer', (event, content) => {
