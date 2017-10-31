@@ -72,8 +72,6 @@ describe('crashReporter module', () => {
         })
       })
 
-      // TODO(alexeykuzmin): Disabled during Chromium 61 upgrade.
-      // It just hangs the test run. Fix it and enable.
       it('should send minidump when node processes crash', function (done) {
         if (process.env.APPVEYOR === 'True') return done()
         if (process.env.TRAVIS === 'true') return done()
