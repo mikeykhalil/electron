@@ -277,6 +277,7 @@ jobs:
       - run:
           name: Install Node.js
           command: brew install node
+      - run: mkdir -p screen
       - run:
          name: Bootstrap
          command: |
@@ -339,6 +340,8 @@ jobs:
           path: junit
       - store_artifacts:
           path: junit
+      - store_artifacts:
+        path: screen
 
   electron-mas-x64:
     environment:
@@ -361,6 +364,7 @@ jobs:
       - run:
           name: Install Node.js
           command: brew install node
+      - run: mkdir -p screen
       - run:
          name: Bootstrap
          command: |
@@ -423,6 +427,8 @@ jobs:
           path: junit
       - store_artifacts:
           path: junit
+      - store_artifacts:
+          path: screen
 
 workflows:
   version: 2

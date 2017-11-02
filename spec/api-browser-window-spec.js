@@ -7,6 +7,7 @@ const os = require('os')
 const qs = require('querystring')
 const http = require('http')
 const {closeWindow} = require('./window-helpers')
+const { execSync } = require('child_process')
 
 const {ipcRenderer, remote, screen} = require('electron')
 const {app, ipcMain, BrowserWindow, protocol, webContents} = remote
@@ -581,6 +582,9 @@ describe('BrowserWindow module', () => {
       w.minimize()
       assert.equal(w.isAlwaysOnTop(), false)
       w.restore()
+      if (w.isAlwaysOnTop() !== true) {
+        execSync('screencapture', ['screen/test92.png'])
+      }
       assert.equal(w.isAlwaysOnTop(), true)
     })
   })
@@ -2071,13 +2075,19 @@ describe('BrowserWindow module', () => {
         w.destroy()
         w = new BrowserWindow()
         w.setKiosk(true)
+        console.log('About to check if window is kiosk')
         assert.equal(w.isKiosk(), true)
+        console.log('Done check if window is kiosk')
 
         w.once('enter-full-screen', () => {
+          execSync('screencapture', ['screen/test179a.png'])
+          console.log('We have entered full screen')
           w.setKiosk(false)
           assert.equal(w.isKiosk(), false)
         })
         w.once('leave-full-screen', () => {
+          execSync('screencapture', ['screen/test179b.png'])
+          console.log('We have left full screen')
           done()
         })
       })
