@@ -341,7 +341,7 @@ jobs:
       - store_artifacts:
           path: junit
       - store_artifacts:
-        path: screen
+          path: screen
 
   electron-mas-x64:
     environment:

@@ -583,7 +583,7 @@ describe('BrowserWindow module', () => {
       assert.equal(w.isAlwaysOnTop(), false)
       w.restore()
       if (w.isAlwaysOnTop() !== true) {
-        execSync('screencapture', ['screen/test92.png'])
+        execSync('screencapture screen/test92.png')
       }
       assert.equal(w.isAlwaysOnTop(), true)
     })
@@ -2078,15 +2078,15 @@ describe('BrowserWindow module', () => {
         console.log('About to check if window is kiosk')
         assert.equal(w.isKiosk(), true)
         console.log('Done check if window is kiosk')
-
+        execSync('screencapture screen/test179a.png')
         w.once('enter-full-screen', () => {
-          execSync('screencapture', ['screen/test179a.png'])
+          execSync('screencapture screen/test179b.png')
           console.log('We have entered full screen')
           w.setKiosk(false)
           assert.equal(w.isKiosk(), false)
         })
         w.once('leave-full-screen', () => {
-          execSync('screencapture', ['screen/test179b.png'])
+          execSync('screencapture screen/test179c.png')
           console.log('We have left full screen')
           done()
         })
@@ -2101,14 +2101,21 @@ describe('BrowserWindow module', () => {
         w.destroy()
         w = new BrowserWindow({ resizable: false })
         w.once('enter-full-screen', () => {
+          execSync('screencapture screen/test180a.png')
+          console.log('We have entered full screen')
           assert.equal(w.isResizable(), true)
           w.setFullScreen(false)
         })
         w.once('leave-full-screen', () => {
+          execSync('screencapture screen/test180b.png')
+          console.log('We have left full screen')
           assert.equal(w.isResizable(), false)
           done()
         })
+        console.log('About to set full screen')
         w.setFullScreen(true)
+        execSync('screencapture screen/test180c.png')
+        console.log('Done to set full screen')
       })
     })
 
