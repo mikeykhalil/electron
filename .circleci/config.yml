@@ -323,9 +323,9 @@ jobs:
                 echo 'Testing Electron debug build'
                 mkdir junit
                 mkdir screen
-                screenshot screen/beforetest.png
+                screencapture screen/beforetest.png
                 script/test.py --ci --rebuild_native_modules -g=kiosk
-                screenshot screen/aftertest.png
+                screencapture screen/aftertest.png
              else
                 echo 'Skipping testing on release build'
              fi
@@ -412,9 +412,9 @@ jobs:
                 echo 'Testing Electron debug build'
                 mkdir junit
                 mkdir screen
-                screenshot screen/beforetest.png
+                screencapture screen/beforetest.png
                 script/test.py --ci --rebuild_native_modules -g=kiosk
-                screenshot screen/aftertest.png
+                screencapture screen/aftertest.png
              else
                 echo 'Skipping testing on release build'
              fi
