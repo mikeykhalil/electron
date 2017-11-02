@@ -582,9 +582,7 @@ describe('BrowserWindow module', () => {
       w.minimize()
       assert.equal(w.isAlwaysOnTop(), false)
       w.restore()
-      if (w.isAlwaysOnTop() !== true) {
-        execSync('screencapture ~/project/screen/test92.png')
-      }
+      execSync('screencapture ~/project/screen/test92.png')
       assert.equal(w.isAlwaysOnTop(), true)
     })
   })
@@ -2074,6 +2072,8 @@ describe('BrowserWindow module', () => {
       it('can be changed with setKiosk method', (done) => {
         w.destroy()
         w = new BrowserWindow()
+        let firstScreen = execSync('screencapture ~/project/screen/test179d.png')
+        console.log('About to set window to kiosk', firstScreen)
         w.setKiosk(true)
         console.log('About to check if window is kiosk')
         assert.equal(w.isKiosk(), true)

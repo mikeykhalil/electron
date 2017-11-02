@@ -277,7 +277,6 @@ jobs:
       - run:
           name: Install Node.js
           command: brew install node
-      - run: mkdir -p screen
       - run:
          name: Bootstrap
          command: |
@@ -323,7 +322,10 @@ jobs:
              if [ "$ELECTRON_RELEASE" != "1" ]; then
                 echo 'Testing Electron debug build'
                 mkdir junit
-                script/test.py --ci --rebuild_native_modules
+                mkdir screen
+                screenshot screen/beforetest.png
+                script/test.py --ci --rebuild_native_modules -g=kiosk
+                screenshot screen/aftertest.png
              else
                 echo 'Skipping testing on release build'
              fi
@@ -364,7 +366,6 @@ jobs:
       - run:
           name: Install Node.js
           command: brew install node
-      - run: mkdir -p screen
       - run:
          name: Bootstrap
          command: |
@@ -410,7 +411,10 @@ jobs:
              if [ "$ELECTRON_RELEASE" != "1" ]; then
                 echo 'Testing Electron debug build'
                 mkdir junit
-                script/test.py --ci --rebuild_native_modules
+                mkdir screen
+                screenshot screen/beforetest.png
+                script/test.py --ci --rebuild_native_modules -g=kiosk
+                screenshot screen/aftertest.png
              else
                 echo 'Skipping testing on release build'
              fi
