@@ -28,9 +28,7 @@ describe('modules support', () => {
       })
     })
 
-    // TODO(alexeykuzmin): Disabled during Chromium 61 upgrade.
-    // Fix it and enable.
-    xdescribe('ffi', () => {
+    describe('ffi', () => {
       if (!nativeModulesEnabled) return
       if (process.platform === 'win32') return
 
