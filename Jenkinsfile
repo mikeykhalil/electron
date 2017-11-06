@@ -2,6 +2,10 @@ pipeline {
     agent {
       label 'osx'
     }
+    environment {
+      MOCHA_FILE = 'junit/test-results.xml'
+      MOCHA_REPORTER = 'mocha-junit-reporter'
+    }
     stages {
         stage('Bootstrap') {
           steps {
@@ -16,6 +20,7 @@ pipeline {
 
         stage('Build') {
           steps {
+            sh 'mkdir junit'
             sh 'script/build.py -c D'
           }
         }
@@ -24,5 +29,10 @@ pipeline {
               sh 'script/test.py --ci --rebuild_native_modules'
           }
         }
+    }
+    post {
+      always {
+          junit 'junit/test-results.xml'
+      }
     }
 }
