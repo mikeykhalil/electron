@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('PreBuild') {
           steps {
-            checkout([$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:electron/electron.git']]])
+            checkout scm
             sh 'script/bootstrap.py --target_arch=x64 --dev'
           }
         }
