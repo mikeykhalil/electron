@@ -37,15 +37,14 @@ void NodeDebugger::Start() {
     // Use custom platform since the gin platform does not work correctly
     // with node's inspector agent
     platform_.reset(new node::NodePlatform(
-        /* thread_pool_size */ 0,
-        env_->event_loop(),
+        /* v8_default_thread_pool_size */ 4, env_->event_loop(),
         /* tracing_controller */ nullptr));
 
     // Set process._debugWaitConnect if --inspect-brk was specified to stop
     // the debugger on the first line
     if (options.wait_for_connect()) {
       mate::Dictionary process(env_->isolate(), env_->process_object());
-      process.Set("_debugWaitConnect", true);
+      process.Set("_breakFirstLine", true);
     }
 
     inspector->Start(platform_.get(), nullptr, options);
