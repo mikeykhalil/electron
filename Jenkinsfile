@@ -3,9 +3,8 @@ pipeline {
       label 'osx'
     }
     stages {
-        stage('PreBuild') {
+        stage('Bootstrap') {
           steps {
-            checkout scm
             sh 'script/bootstrap.py --target_arch=x64 --dev'
           }
         }
