@@ -4,36 +4,19 @@ def branches = [:]
 for (int i = 0; i < 2 ; i++) {
   def arch = arches[i]
   branches["electron-${arch}-x64"] = {
-    agent {
-      label 'osx'
-    }
-    stages {
-      stage('Set MAS build') {
-        when { arch 'mas' }
-        environment {
-          MAS_BUILD = 1
-        }
+    stage("electron-${arch}-x64") {
+      agent {
+        label 'osx'
       }
-      stage('Bootstrap') {
-        steps {
-          sh 'echo $MAS_BUILD'
-          sh 'script/bootstrap.py --target_arch=x64 --dev'
+      steps {
+        if (arch === mas) {
+          sh 'export MAS_BUILD=1'
         }
-      }
-      stage('Lint') {
-        steps {
-          sh 'npm run lint'
-        }
-      }
-      stage('Build') {
-        steps {
-          sh 'script/build.py -c D'
-        }
-      }
-      stage('Test'){
-        steps {
-            sh 'script/test.py --ci --rebuild_native_modules'
-        }
+        sh 'echo $MAS_BUILD'
+        sh 'script/bootstrap.py --target_arch=x64 --dev'
+        sh 'npm run lint'
+        sh 'script/build.py -c D'
+        sh 'script/test.py --ci --rebuild_native_modules'
       }
     }
   }
