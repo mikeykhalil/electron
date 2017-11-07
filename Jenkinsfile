@@ -1,3 +1,7 @@
+def buildSteps = {
+  sh 'env | sort'
+}
+
 pipeline {
     agent none
     stages {
@@ -7,9 +11,7 @@ pipeline {
                     agent {
                       label 'osx'
                     }
-                    steps {
-                        sh 'env | sort'
-                    }
+                    steps buildSteps
                 }
                 stage('electron-mas-x64') {
                     agent {
@@ -18,9 +20,7 @@ pipeline {
                     environment {
                         MAS_BUILD = '1'
                     }
-                    steps {
-                        sh 'env | sort'
-                    }
+                    steps buildSteps
                 }
             }
         }
