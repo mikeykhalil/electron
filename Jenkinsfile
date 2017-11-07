@@ -25,6 +25,8 @@ for (int i = 0; i < 2 ; i++) {
 pipeline {
   agent none
   stages {
-    parallel branches
+    stage('Build and test') {
+      parallel branches
+    }
   }
 }
