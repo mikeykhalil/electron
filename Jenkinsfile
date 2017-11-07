@@ -14,6 +14,7 @@ buildarches['electron-osx-x64'] = {
     node('osx') {
       steps buildsteps
     }
+  }
 }
 
 buildarches['electron-mas-x64'] = {
@@ -24,6 +25,7 @@ buildarches['electron-mas-x64'] = {
       }
       steps buildsteps
     }
+  }
 }
 
 parallel buildarches
