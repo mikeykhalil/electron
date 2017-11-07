@@ -1,14 +1,20 @@
-pipeline {
-    agent {
-      label 'osx'
-    }
-    environment {
-      MOCHA_FILE = 'junit/test-results.xml'
-      MOCHA_REPORTER = 'mocha-junit-reporter'
-    }
-    stages {
+def arches = ["mas", "osx"]
+def branches = [:]
+
+for (int i = 0; i < 2 ; i++) {
+  def arch = arches[i]
+  branches["electron-${arch}-x64"] = {
+    node ('osx') {
+      stages {
+        stage('Set MAS build') {
+          when { arch 'mas' }
+          environment {
+            MAS_BUILD = 1
+          }
+        }
         stage('Bootstrap') {
           steps {
+            sh 'echo $MAS_BUILD'
             sh 'script/bootstrap.py --target_arch=x64 --dev'
           }
         }
@@ -17,10 +23,8 @@ pipeline {
             sh 'npm run lint'
           }
         }
-
         stage('Build') {
           steps {
-            sh 'mkdir junit'
             sh 'script/build.py -c D'
           }
         }
@@ -29,10 +33,9 @@ pipeline {
               sh 'script/test.py --ci --rebuild_native_modules'
           }
         }
-    }
-    post {
-      always {
-          junit 'junit/test-results.xml'
       }
     }
+  }
 }
+
+parallel branches
