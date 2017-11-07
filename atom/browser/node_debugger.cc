@@ -35,9 +35,10 @@ void NodeDebugger::Start() {
 
   if (options.inspector_enabled()) {
     // Use custom platform since the gin platform does not work correctly
-    // with node's inspector agent
+    // with node's inspector agent. We use the default thread pool size
+    // specified by node.cc
     platform_.reset(new node::NodePlatform(
-        /* v8_default_thread_pool_size */ 4, env_->event_loop(),
+        /* thread_pool_size */ 4, env_->event_loop(),
         /* tracing_controller */ nullptr));
 
     // Set process._debugWaitConnect if --inspect-brk was specified to stop
