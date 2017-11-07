@@ -22,4 +22,9 @@ for (int i = 0; i < 2 ; i++) {
   }
 }
 
-parallel branches
+pipeline {
+  agent none
+  stages {
+    parallel branches
+  }
+}
