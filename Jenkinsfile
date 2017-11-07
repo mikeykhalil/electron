@@ -1,11 +1,3 @@
-buildSteps = {
-  sh 'env | sort'
-  sh 'script/bootstrap.py --target_arch=x64 --dev'
-  sh 'npm run lint'
-  sh 'script/build.py -c D'
-  sh 'script/test.py --ci --rebuild_native_modules'
-}
-
 pipeline {
     agent none
     stages {
@@ -15,7 +7,13 @@ pipeline {
                     agent {
                       label 'osx'
                     }
-                    steps buildSteps
+                    steps {
+                        sh 'env | sort'
+                        sh 'script/bootstrap.py --target_arch=x64 --dev'
+                        sh 'npm run lint'
+                        sh 'script/build.py -c D'
+                        sh 'script/test.py --ci --rebuild_native_modules'
+                    }
                 }
                 stage('electron-mas-x64') {
                     agent {
@@ -24,7 +22,13 @@ pipeline {
                     environment {
                         MAS_BUILD = '1'
                     }
-                    steps buildSteps
+                    steps {
+                        sh 'env | sort'
+                        sh 'script/bootstrap.py --target_arch=x64 --dev'
+                        sh 'npm run lint'
+                        sh 'script/build.py -c D'
+                        sh 'script/test.py --ci --rebuild_native_modules'
+                    }
                 }
             }
         }
