@@ -1,30 +1,19 @@
-def buildarches = [:]
-
-buildarches['electron-osx-x64'] = {
-  stage ('electron-osx-x64'){
-    node('osx') {
-      sh 'echo $MAS_BUILD'
-      sh 'script/bootstrap.py --target_arch=x64 --dev'
-      sh 'npm run lint'
-      sh 'script/build.py -c D'
-      sh 'script/test.py --ci --rebuild_native_modules'
+pipeline {
+    agent any
+    stages {
+        stage('Parallel builds') {
+            parallel {
+                stage('electron-osx-x64') {
+                    steps {
+                        echo "electron-osx-x64 "
+                    }
+                }
+                stage('electron-mas-x64') {
+                    steps {
+                        echo "electron-mas-x64"
+                    }
+                }
+            }
+        }
     }
-  }
 }
-
-buildarches['electron-mas-x64'] = {
-  stage ('electron-mas-x64'){
-    environment {
-      MAS_BUILD = '1'
-    }
-    node('osx') {
-      sh 'echo $MAS_BUILD'
-      sh 'script/bootstrap.py --target_arch=x64 --dev'
-      sh 'npm run lint'
-      sh 'script/build.py -c D'
-      sh 'script/test.py --ci --rebuild_native_modules'
-    }
-  }
-}
-
-parallel buildarches
